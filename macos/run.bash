@@ -3,16 +3,14 @@
 # Title: Setup scripts runner
 # Author: Nicolás de Rivas Morillo
 
-runs-dir="$(pwd)/runs"
-filter=""
+runsDir="$(pwd)/runs"
 dry="0"
 
-[[ $1 == "--dry" ]] && dry="1" || filter="$1"
+[[ "$1" == "--dry" ]] && dry="1"
 
-scripts=$(find ${runs-dir} -maxdepth 1 -mindepth 1 -type f)
+scripts=$(find ${runsDir} -maxdepth 1 -mindepth 1 -type f)
 
-echo "$scripts --- ${runs-dir}"
-
-for script in scripts; do
-  echo "$script"
+for script in $scripts; do
+  echo -e "\e[34m[RUNNING]\e[0m $script"
+  [[ $dry == "0" ]] && $script
 done
