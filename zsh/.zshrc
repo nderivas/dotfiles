@@ -1,10 +1,11 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+# Nicolás' .zshrc configuration file
+
+# Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Configs
 HISTSIZE=1000
 HISTFILE=~/.history
 SAVEHIST=$HISTSIZE
@@ -17,32 +18,36 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
+# Some binds
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey -v
 
+# Completion tweaks
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors '${(s.:.)LS_COLORS}'
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
+# Install zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-
 if [ ! -d "$ZINIT_HOME" ]; then
 	mkdir -p "$(dirname $ZINIT_HOME)"
 	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
-
 source "${ZINIT_HOME}/zinit.zsh"
 
+# Install zinit plugins
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 
+# Start autocompletion
 autoload -U compinit && compinit
 
+# Yazi function
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
@@ -52,6 +57,7 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+# Aliases
 alias rm='rm -i'
 alias add='git add .'
 alias push='git push origin master'
@@ -67,6 +73,7 @@ alias lla='eza -l -a --color=always --icons=always'
 alias cd='z'
 alias ff='fastfetch --config os --kitty-icat ~/.local/share/fastfetch/images/arch.png'
 
+# Environment variables
 export EDITOR=nvim
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
@@ -75,6 +82,7 @@ export FZF_DEFAULT_OPTS=" \
 --color=selected-bg:#45475a \
 --color=border:#313244,label:#cdd6f4"
 
+# Setup fzf and zoxide
 eval "$(fzf --zsh)"
 eval "$(zoxide init zsh)"
 
