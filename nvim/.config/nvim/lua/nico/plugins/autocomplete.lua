@@ -4,7 +4,7 @@ return {
     dependencies = { 'rafamadriz/friendly-snippets' },
 
     -- use a release tag to download pre-built binaries
-    version = '*',
+    version = '1.*',
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
@@ -34,7 +34,9 @@ return {
             default = { 'lsp', 'path', 'snippets', 'buffer' },
         },
 
-        fuzzy = { implementation = "prefer_rust_with_warning" }
+        fuzzy = {
+            implementation = "prefer_rust_with_warning",
+        }
     },
     opts_extend = { "sources.default" }
 }
