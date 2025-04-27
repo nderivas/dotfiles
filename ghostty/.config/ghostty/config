@@ -21,7 +21,7 @@ keybind = ctrl+k=goto_split:up
 keybind = ctrl+l=goto_split:right
 
 #   Create split
-keybind = ctrl+c=new_split:down
+keybind = ctrl+b=new_split:down
 keybind = ctrl+v=new_split:right
 
 #   Close split
